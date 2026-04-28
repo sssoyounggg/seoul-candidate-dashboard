@@ -77,17 +77,42 @@ const candidates = [
       {
         date: "최근 30일",
         title: "현직 평가 이슈 증가",
-        description: "서울시정 성과, 정책 연속성, 장기 재임 평가가 함께 언급되었습니다."
+        description: "서울시정 성과, 정책 연속성, 장기 재임 평가가 함께 언급되었습니다.",
+        series: [
+          { date: "4/01", value: 2100 },
+          { date: "4/06", value: 2600 },
+          { date: "4/11", value: 3100 },
+          { date: "4/16", value: 3700 },
+          { date: "4/21", value: 4400 },
+          { date: "4/26", value: 5100 }
+        ]
       },
       {
         date: "최근 7일",
         title: "주거·교통 키워드 집중",
-        description: "생활 밀착형 정책인 주거와 교통 관련 댓글 반응이 증가했습니다."
+        description: "생활 밀착형 정책인 주거와 교통 관련 댓글 반응이 증가했습니다.",
+        series: [
+          { date: "4/22", value: 900 },
+          { date: "4/23", value: 1150 },
+          { date: "4/24", value: 1300 },
+          { date: "4/25", value: 1700 },
+          { date: "4/26", value: 1550 },
+          { date: "4/27", value: 1900 },
+          { date: "4/28", value: 2150 }
+        ]
       },
       {
         date: "최근 3일",
         title: "후보 경쟁 구도 언급 확대",
-        description: "다른 후보와의 비교, 본선 경쟁력, 정당 구도 관련 언급이 나타났습니다."
+        description: "다른 후보와의 비교, 본선 경쟁력, 정당 구도 관련 언급이 나타났습니다.",
+        series: [
+          { date: "4/26 오전", value: 520 },
+          { date: "4/26 오후", value: 690 },
+          { date: "4/27 오전", value: 760 },
+          { date: "4/27 오후", value: 980 },
+          { date: "4/28 오전", value: 1120 },
+          { date: "4/28 오후", value: 1380 }
+        ]
       }
     ]
   },
@@ -169,109 +194,159 @@ const candidates = [
       {
         date: "최근 30일",
         title: "성동구 행정 경험 언급 증가",
-        description: "지역 행정 성과를 서울시 전체 정책으로 확장할 수 있는지가 주요 관심사로 나타났습니다."
+        description: "지역 행정 성과를 서울시 전체 정책으로 확장할 수 있는지가 주요 관심사로 나타났습니다.",
+        series: [
+          { date: "4/01", value: 1400 },
+          { date: "4/06", value: 1800 },
+          { date: "4/11", value: 2300 },
+          { date: "4/16", value: 2950 },
+          { date: "4/21", value: 3600 },
+          { date: "4/26", value: 4200 }
+        ]
       },
       {
         date: "최근 7일",
         title: "당내 경쟁 구도 관심",
-        description: "민주당 후보군 안에서의 경쟁력과 본선 가능성이 함께 언급되었습니다."
+        description: "민주당 후보군 안에서의 경쟁력과 본선 가능성이 함께 언급되었습니다.",
+        series: [
+          { date: "4/22", value: 820 },
+          { date: "4/23", value: 900 },
+          { date: "4/24", value: 1040 },
+          { date: "4/25", value: 1210 },
+          { date: "4/26", value: 1180 },
+          { date: "4/27", value: 1450 },
+          { date: "4/28", value: 1620 }
+        ]
       },
       {
         date: "최근 3일",
         title: "청년·도시행정 키워드 부상",
-        description: "생활 행정, 청년 정책, 도시 혁신 이미지가 댓글 반응에서 확인되었습니다."
+        description: "생활 행정, 청년 정책, 도시 혁신 이미지가 댓글 반응에서 확인되었습니다.",
+        series: [
+          { date: "4/26 오전", value: 430 },
+          { date: "4/26 오후", value: 520 },
+          { date: "4/27 오전", value: 610 },
+          { date: "4/27 오후", value: 840 },
+          { date: "4/28 오전", value: 930 },
+          { date: "4/28 오후", value: 1110 }
+        ]
       }
     ]
   },
   {
-    id: "kim-jae-sub",
-    name: "김재섭",
-    party: "국민의힘",
-    age: "만 38세",
-    education: "서울대 법학전문대학원",
-    career: "국회의원",
-    photo: "images/kim.jpg",
-    mentionCount: 21680,
-    representativeKeywords: ["청년 보수", "세대교체", "정책 경쟁"],
-    controversyIssues: ["경험 부족 논쟁", "세대교체 기대", "본선 경쟁력"],
+    id: "kwon-young-guk",
+    name: "권영국",
+    party: "정의당",
+    age: "만 62세",
+    education: "서울대 공과대학 금속공학과 졸업",
+    career: "정의당 대표, 변호사, 전 민주사회를 위한 변호사모임 노동위원장",
+    photo: "",
+    mentionCount: 28640,
+    representativeKeywords: ["노동", "불평등", "생존비용"],
+    controversyIssues: ["서울시장 출마 선언", "생존비용 절감 공약", "TBS·노동권 이슈"],
     keywordPeriods: {
       "3d": [
         {
-          keyword: "세대교체",
-          count: 2400,
-          sentiment: "젊은 후보 이미지에 대한 기대가 나타남"
+          keyword: "TBS",
+          count: 3100,
+          sentiment: "공공성, 임금체불, 노동권 이슈와 연결되어 언급됨"
         },
         {
-          keyword: "청년",
-          count: 1900,
-          sentiment: "청년층 대표성에 대한 관심이 있음"
+          keyword: "노동권",
+          count: 2800,
+          sentiment: "서울시가 직간접 고용 노동 문제에 책임져야 한다는 주장이 부각됨"
         },
         {
-          keyword: "경험",
-          count: 1700,
-          sentiment: "행정 경험 부족에 대한 우려도 함께 언급됨"
+          keyword: "생존비용",
+          count: 2300,
+          sentiment: "교통·주거·의료 등 필수 생활비 부담 완화 공약과 연결됨"
         }
       ],
       "7d": [
         {
-          keyword: "세대교체",
-          count: 5300,
-          sentiment: "정치 신선함과 변화 요구가 연결됨"
+          keyword: "서울시장 출마",
+          count: 6500,
+          sentiment: "진보정당 후보로서의 출마 의미와 선거 구도가 함께 언급됨"
         },
         {
-          keyword: "청년 보수",
-          count: 4600,
-          sentiment: "보수 정당 내 젊은 정치인 이미지가 부각됨"
+          keyword: "생존비용",
+          count: 5900,
+          sentiment: "생활비 부담을 낮추겠다는 메시지가 핵심 공약으로 해석됨"
         },
         {
-          keyword: "정책 경쟁",
-          count: 3900,
-          sentiment: "인지도보다 정책 구체성이 중요하다는 반응이 있음"
+          keyword: "노동",
+          count: 5400,
+          sentiment: "노동자 권리, 산업재해, 서울시 책임론과 연결됨"
         },
         {
-          keyword: "경험 논쟁",
-          count: 3400,
-          sentiment: "시장직 수행 경험에 대한 의문이 제기됨"
+          keyword: "불평등",
+          count: 4700,
+          sentiment: "서울의 주거·소득·지역 불평등 문제를 전면에 세운 흐름"
         }
       ],
       "30d": [
         {
-          keyword: "세대교체론",
+          keyword: "정의당 후보",
+          count: 13200,
+          sentiment: "정의당 대표의 서울시장 출마와 진보정당 재편 구도가 함께 주목됨"
+        },
+        {
+          keyword: "생존비용 공약",
           count: 11800,
-          sentiment: "기성 정치와 다른 이미지를 기대하는 반응이 있음"
+          sentiment: "주거·교통·의료 비용 부담 완화를 중심으로 언급됨"
         },
         {
-          keyword: "청년 정치",
-          count: 9900,
-          sentiment: "세대 대표성과 실무 역량을 함께 평가하는 흐름"
+          keyword: "노동 중심 서울",
+          count: 10300,
+          sentiment: "노동부시장, 노동권 보장, 공공성 강화 메시지가 부각됨"
         },
         {
-          keyword: "본선 경쟁력",
-          count: 8600,
-          sentiment: "인지도, 조직력, 정책 완성도가 주요 판단 기준"
-        },
-        {
-          keyword: "정책 역량",
-          count: 7900,
-          sentiment: "구체적인 서울시 정책 제시가 필요하다는 반응"
+          keyword: "용산 출마선언",
+          count: 9600,
+          sentiment: "개발, 불평등, 용산참사 맥락을 연결한 출마 메시지가 언급됨"
         }
       ]
     },
     timelines: [
       {
-        date: "최근 30일",
-        title: "세대교체론 언급 확대",
-        description: "젊은 후보 이미지와 변화 요구가 핵심 키워드로 등장했습니다."
+        date: "2026-04-08",
+        title: "서울시장 출마 선언",
+        description: "권영국 정의당 대표가 용산역 광장에서 서울시장 선거 출마를 공식 선언했습니다.",
+        series: [
+          { date: "4/08 오전", value: 850 },
+          { date: "4/08 오후", value: 2100 },
+          { date: "4/09", value: 1850 },
+          { date: "4/10", value: 1600 },
+          { date: "4/11", value: 1320 },
+          { date: "4/12", value: 1180 }
+        ]
       },
       {
         date: "최근 7일",
-        title: "경험 부족 논쟁",
-        description: "새로운 이미지에 대한 기대와 행정 경험에 대한 우려가 동시에 나타났습니다."
+        title: "생존비용 절감 공약 부각",
+        description: "주거, 교통, 의료처럼 시민이 매일 부담하는 비용을 낮추겠다는 공약이 주요 키워드로 등장했습니다.",
+        series: [
+          { date: "4/22", value: 760 },
+          { date: "4/23", value: 980 },
+          { date: "4/24", value: 1460 },
+          { date: "4/25", value: 1380 },
+          { date: "4/26", value: 1650 },
+          { date: "4/27", value: 1880 },
+          { date: "4/28", value: 2100 }
+        ]
       },
       {
-        date: "최근 3일",
-        title: "정책 구체성 요구",
-        description: "후보 이미지보다 구체적인 서울시 정책이 필요하다는 반응이 보였습니다."
+        date: "2026-04-28",
+        title: "TBS·노동권 이슈 확대",
+        description: "TBS 방문과 노사 간담회 이슈를 계기로 공공성, 임금체불, 노동권 관련 언급이 늘었습니다.",
+        series: [
+          { date: "4/26 오전", value: 420 },
+          { date: "4/26 오후", value: 610 },
+          { date: "4/27 오전", value: 830 },
+          { date: "4/27 오후", value: 1190 },
+          { date: "4/28 오전", value: 1760 },
+          { date: "4/28 오후", value: 2540 }
+        ]
       }
     ]
   }
