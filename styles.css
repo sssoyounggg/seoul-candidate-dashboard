@@ -467,3 +467,193 @@ h3 {
     text-align: left;
   }
 }
+.election-countdown {
+  margin-top: 28px;
+}
+
+.countdown-card {
+  display: inline-grid;
+  gap: 6px;
+  min-width: 260px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.countdown-label {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.countdown-dday {
+  font-size: 42px;
+  line-height: 1;
+  color: white;
+}
+
+.countdown-date,
+.countdown-description {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.countdown-description {
+  font-weight: 700;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 14px;
+}
+
+.timeline-item {
+  padding-left: 0;
+  border-left: 0;
+  border-radius: 18px;
+  background: #fbfcfd;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.timeline-button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border: 0;
+  border-left: 4px solid #34495e;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.timeline-button:hover {
+  background: #f4f7fb;
+}
+
+.timeline-item.open .timeline-button {
+  background: #f4f7fb;
+}
+
+.timeline-button-text h3 {
+  margin-bottom: 6px;
+}
+
+.timeline-button-text p {
+  margin-bottom: 0;
+  color: #34495e;
+}
+
+.timeline-open-label {
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #17202a;
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.timeline-chart-panel {
+  padding: 18px;
+  border-top: 1px solid #e2e8f0;
+  background: white;
+}
+
+.timeline-chart-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.timeline-chart-head strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.timeline-chart-head p {
+  margin-bottom: 0;
+  color: #5d6d7e;
+}
+
+.timeline-chart-head span {
+  flex-shrink: 0;
+  color: #1f618d;
+  font-weight: 800;
+}
+
+.timeline-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.timeline-svg-grid {
+  stroke: #dfe7ef;
+  stroke-width: 1;
+}
+
+.timeline-svg-axis {
+  stroke: #9aa8b6;
+  stroke-width: 1.4;
+}
+
+.timeline-svg-area {
+  fill: rgba(52, 73, 94, 0.12);
+}
+
+.timeline-svg-line {
+  fill: none;
+  stroke: #34495e;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.timeline-svg-point {
+  fill: white;
+  stroke: #34495e;
+  stroke-width: 3;
+}
+
+.timeline-svg-x-label,
+.timeline-svg-y-label {
+  fill: #5d6d7e;
+  font-size: 12px;
+}
+
+.timeline-chart-caption,
+.timeline-chart-empty {
+  margin: 12px 0 0;
+  color: #5d6d7e;
+}
+
+@media (max-width: 640px) {
+  .countdown-card {
+    width: 100%;
+  }
+
+  .timeline-button {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timeline-chart-head {
+    flex-direction: column;
+  }
+
+  .timeline-chart-head span {
+    flex-shrink: 1;
+  }
+}
