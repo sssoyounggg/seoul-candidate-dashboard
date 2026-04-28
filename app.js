@@ -26,6 +26,72 @@ function createPortrait(candidate) {
   `;
 }
 
+function ensureCountdownContainer() {
+  const headerInner = document.querySelector(".site-header .header-inner");
+
+  if (!headerInner) {
+    return null;
+  }
+
+  let countdown = document.querySelector("#electionCountdown");
+
+  if (!countdown) {
+    countdown = document.createElement("div");
+    countdown.id = "electionCountdown";
+    countdown.className = "election-countdown";
+    headerInner.appendChild(countdown);
+  }
+
+  return countdown;
+}
+
+function getDdayText(daysLeft) {
+  if (daysLeft > 0) {
+    return `D-${daysLeft}`;
+  }
+
+  if (daysLeft === 0) {
+    return "D-DAY";
+  }
+
+  return `D+${Math.abs(daysLeft)}`;
+}
+
+function getDdayDescription(daysLeft) {
+  if (daysLeft > 0) {
+    return `선거일까지 ${daysLeft}일 남았습니다.`;
+  }
+
+  if (daysLeft === 0) {
+    return "오늘은 선거일입니다.";
+  }
+
+  return `선거일이 ${Math.abs(daysLeft)}일 지났습니다.`;
+}
+
+function renderElectionCountdown() {
+  const countdown = ensureCountdownContainer();
+
+  if (!countdown) {
+    return;
+  }
+
+  const electionDate = new Date(2026, 5, 3);
+  const today = new Date();
+  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  const daysLeft = Math.ceil((electionDate - todayOnly) / millisecondsPerDay);
+
+  countdown.innerHTML = `
+    <div class="countdown-card">
+      <span class="countdown-label">제9회 전국동시지방선거</span>
+      <strong class="countdown-dday">${getDdayText(daysLeft)}</strong>
+      <span class="countdown-date">2026년 6월 3일 수요일</span>
+      <span class="countdown-description">${getDdayDescription(daysLeft)}</span>
+    </div>
+  `;
+}
+
 function renderPartyOptions() {
   const parties = [...new Set(candidates.map((candidate) => candidate.party))];
 
@@ -102,6 +168,7 @@ function renderCandidates() {
   });
 }
 
+renderElectionCountdown();
 renderPartyOptions();
 renderCandidates();
 
