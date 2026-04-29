@@ -14,7 +14,7 @@ const timelineChart = document.querySelector("#timelineChart");
 const periodButtons = document.querySelectorAll(".period-button");
 
 let activePeriod = "7d";
-let activeTimelineIndex = 0;
+let activeTimelineIndex = getDefaultTimelineIndex();
 
 function formatNumber(value) {
   return Number(value).toLocaleString("ko-KR");
@@ -38,6 +38,30 @@ function createPortrait(candidate) {
       <div class="portrait-placeholder">${getInitial(candidate.name)}</div>
     </div>
   `;
+}
+
+function getDefaultTimelineIndex() {
+  if (!candidate.timelines || candidate.timelines.length === 0) {
+    return 0;
+  }
+
+  const explicitDefaultIndex = candidate.timelines.findIndex((item) => {
+    return item.defaultOpen === true;
+  });
+
+  if (explicitDefaultIndex >= 0) {
+    return explicitDefaultIndex;
+  }
+
+  const sevenDayIndex = candidate.timelines.findIndex((item) => {
+    return String(item.date).includes("최근 7일") || item.period === "7d";
+  });
+
+  if (sevenDayIndex >= 0) {
+    return sevenDayIndex;
+  }
+
+  return 0;
 }
 
 function renderHeader() {
@@ -146,12 +170,23 @@ function renderChart() {
 }
 
 function renderTimeline() {
-  timelineList.innerHTML = candidate.timelines
+  if (!timelineList) {
+    return;
+  }
+
+  const timelines = candidate.timelines || [];
+
+  timelineList.innerHTML = timelines
     .map((item, index) => {
       const isActive = activeTimelineIndex === index;
 
       return `
-        <button class="timeline-select-card ${isActive ? "active" : ""}" type="button" data-index="${index}">
+        <button
+          class="timeline-select-card ${isActive ? "active" : ""}"
+          type="button"
+          data-index="${index}"
+          aria-pressed="${isActive}"
+        >
           <span class="timeline-date">${item.date}</span>
           <strong>${item.title}</strong>
           <span>${item.description}</span>
@@ -169,23 +204,15 @@ function renderTimeline() {
   });
 }
 
-function getPointPosition(item, index, series, padding, chartWidth, chartHeight, minValue, maxValue) {
-  const x =
-    series.length === 1
-      ? padding.left + chartWidth / 2
-      : padding.left + (index / (series.length - 1)) * chartWidth;
+function getTimelineSeries(timeline) {
+  const rawSeries = timeline.series7d || timeline.weeklySeries || timeline.series || [];
 
-  const allValuesSame = maxValue === minValue;
-
-  const y = allValuesSame
-    ? padding.top + chartHeight / 2
-    : padding.top + chartHeight - ((item.value - minValue) / (maxValue - minValue)) * chartHeight;
-
-  return {
-    ...item,
-    x,
-    y
-  };
+  return rawSeries.map((item, index) => {
+    return {
+      label: item.label || item.date || `${index + 1}일`,
+      value: Number(item.value ?? item.count ?? 0)
+    };
+  });
 }
 
 function renderTimelineChart() {
@@ -193,115 +220,46 @@ function renderTimelineChart() {
     return;
   }
 
-  const timeline = candidate.timelines[activeTimelineIndex];
+  const timelines = candidate.timelines || [];
+  const timeline = timelines[activeTimelineIndex];
 
   if (!timeline) {
-    timelineChart.innerHTML = `<p class="timeline-chart-empty">표시할 타임라인이 없습니다.</p>`;
-    return;
-  }
-
-  const series = Array.isArray(timeline.series) ? timeline.series : [];
-
-  if (series.length === 0) {
     timelineChart.innerHTML = `
-      <div class="timeline-chart-panel">
-        <div class="timeline-chart-head">
-          <div>
-            <strong>${timeline.title}</strong>
-            <p>${timeline.description}</p>
-          </div>
-        </div>
-        <p class="timeline-chart-empty">이 타임라인 항목에는 아직 시계열 데이터가 없습니다.</p>
+      <div class="timeline-chart-card">
+        <p class="timeline-chart-empty">표시할 타임라인 데이터가 없습니다.</p>
       </div>
     `;
     return;
   }
 
-  const width = 760;
-  const height = 300;
-  const padding = {
-    top: 32,
-    right: 34,
-    bottom: 58,
-    left: 64
-  };
+  const series = getTimelineSeries(timeline);
 
-  const chartWidth = width - padding.left - padding.right;
-  const chartHeight = height - padding.top - padding.bottom;
+  if (series.length === 0) {
+    timelineChart.innerHTML = `
+      <div class="timeline-chart-card">
+        <h3>${timeline.chartTitle || `${timeline.title} 언급량`}</h3>
+        <p class="timeline-chart-empty">이 이슈에는 최근 7일 시계열 데이터가 없습니다.</p>
+      </div>
+    `;
+    return;
+  }
 
-  const values = series.map((item) => item.value);
-  const maxValue = Math.max(...values);
-  const minValue = Math.min(...values);
+  const maxValue = Math.max(...series.map((item) => item.value), 1);
 
-  const points = series.map((item, index) => {
-    return getPointPosition(
-      item,
-      index,
-      series,
-      padding,
-      chartWidth,
-      chartHeight,
-      minValue,
-      maxValue
-    );
-  });
-
-  const linePath = points
-    .map((point, index) => {
-      const command = index === 0 ? "M" : "L";
-      return `${command} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
-    })
-    .join(" ");
-
-  const bottomY = padding.top + chartHeight;
-
-  const areaPath = `
-    ${linePath}
-    L ${points[points.length - 1].x.toFixed(1)} ${bottomY}
-    L ${points[0].x.toFixed(1)} ${bottomY}
-    Z
-  `;
-
-  const middleValue = Math.round((maxValue + minValue) / 2);
-  const gridValues = [maxValue, middleValue, minValue];
-
-  const gridLines = gridValues
-    .map((value) => {
-      const allValuesSame = maxValue === minValue;
-
-      const y = allValuesSame
-        ? padding.top + chartHeight / 2
-        : padding.top + chartHeight - ((value - minValue) / (maxValue - minValue)) * chartHeight;
+  const barsHTML = series
+    .map((item) => {
+      const height = item.value === 0 ? 0 : Math.max(8, Math.round((item.value / maxValue) * 100));
 
       return `
-        <g>
-          <line class="timeline-svg-grid" x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}"></line>
-          <text class="timeline-svg-y-label" x="${padding.left - 12}" y="${y + 4}" text-anchor="end">${formatNumber(value)}</text>
-        </g>
-      `;
-    })
-    .join("");
+        <div class="timeline-bar-item">
+          <span class="timeline-bar-value">${formatNumber(item.value)}</span>
 
-  const pointCircles = points
-    .map((point) => `
-      <g>
-        <circle class="timeline-svg-point" cx="${point.x}" cy="${point.y}" r="5"></circle>
-        <text class="timeline-svg-point-label" x="${point.x}" y="${point.y - 12}" text-anchor="middle">${formatNumber(point.value)}</text>
-        <title>${point.date}: ${formatNumber(point.value)}건</title>
-      </g>
-    `)
-    .join("");
+          <div class="timeline-bar-frame">
+            <div class="timeline-bar" style="height: ${height}%"></div>
+          </div>
 
-  const xLabels = points
-    .map((point, index) => {
-      const shouldShow = points.length <= 7 || index === 0 || index === points.length - 1;
-
-      if (!shouldShow) {
-        return "";
-      }
-
-      return `
-        <text class="timeline-svg-x-label" x="${point.x}" y="${height - 22}" text-anchor="middle">${point.date}</text>
+          <span class="timeline-bar-label">${item.label}</span>
+        </div>
       `;
     })
     .join("");
@@ -311,37 +269,24 @@ function renderTimelineChart() {
   }, series[0]);
 
   timelineChart.innerHTML = `
-    <div class="timeline-chart-panel">
-      <div class="timeline-chart-head">
+    <article class="timeline-chart-card">
+      <div class="timeline-chart-title-row">
         <div>
-          <strong>${timeline.title} 시계열 그래프</strong>
-          <p>${timeline.description}</p>
+          <span class="timeline-chart-kicker">최근 7일 시계열</span>
+          <h3>${timeline.chartTitle || `${timeline.title} 언급량`}</h3>
         </div>
 
         <div class="timeline-peak-box">
-          <span>최고 언급량</span>
-          <strong>${formatNumber(peak.value)}건</strong>
-          <small>${peak.date}</small>
+          <span>최고점</span>
+          <strong>${formatNumber(peak.value)}</strong>
+          <small>${peak.label}</small>
         </div>
       </div>
 
-      <svg class="timeline-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${timeline.title} 시계열 그래프">
-        ${gridLines}
-
-        <line class="timeline-svg-axis" x1="${padding.left}" y1="${bottomY}" x2="${width - padding.right}" y2="${bottomY}"></line>
-        <line class="timeline-svg-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${bottomY}"></line>
-
-        <path class="timeline-svg-area" d="${areaPath}"></path>
-        <path class="timeline-svg-line" d="${linePath}"></path>
-
-        ${pointCircles}
-        ${xLabels}
-      </svg>
-
-      <p class="timeline-chart-caption">
-        이 그래프는 선택한 타임라인 이슈의 시간 흐름별 언급량을 보여줍니다.
-      </p>
-    </div>
+      <div class="timeline-bar-chart" aria-label="${timeline.title} 최근 7일 언급량">
+        ${barsHTML}
+      </div>
+    </article>
   `;
 }
 
