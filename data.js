@@ -252,7 +252,7 @@ const candidates = [
     age: "만 62세",
     education: "서울대 공과대학 금속공학과 졸업",
     career: "정의당 대표, 변호사, 전 민주사회를 위한 변호사모임 노동위원장",
-    photo: "",
+    photo: "images/kwon.jpg",
     mentionCount: 28640,
     representativeKeywords: ["노동", "불평등", "생존비용"],
     controversyIssues: ["서울시장 출마 선언", "생존비용 절감 공약", "TBS·노동권 이슈"],
