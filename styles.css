@@ -467,102 +467,115 @@ h3 {
     text-align: left;
   }
 }
+.main-header-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 32px;
+  align-items: center;
+}
+
+.header-copy {
+  min-width: 0;
+}
+
 .election-countdown {
-  margin-top: 28px;
+  justify-self: end;
 }
 
 .countdown-card {
-  display: inline-grid;
-  gap: 6px;
-  min-width: 260px;
-  padding: 18px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.11);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+  display: grid;
+  gap: 8px;
+  width: 300px;
+  padding: 26px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  text-align: right;
 }
 
 .countdown-label {
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .countdown-dday {
-  font-size: 42px;
-  line-height: 1;
   color: white;
+  font-size: 62px;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
-.countdown-date,
-.countdown-description {
-  color: rgba(255, 255, 255, 0.86);
-}
-
-.countdown-description {
+.countdown-date {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15px;
   font-weight: 700;
+}
+
+.timeline-section .section-title-row {
+  margin-bottom: 16px;
 }
 
 .timeline-list {
   display: grid;
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
-.timeline-item {
-  padding-left: 0;
-  border-left: 0;
+.timeline-select-card {
+  display: grid;
+  gap: 7px;
+  min-height: 150px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
   border-radius: 18px;
   background: #fbfcfd;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-}
-
-.timeline-button {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  padding: 18px;
-  border: 0;
-  border-left: 4px solid #34495e;
-  background: transparent;
   color: inherit;
   text-align: left;
   cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.timeline-button:hover {
-  background: #f4f7fb;
+.timeline-select-card:hover {
+  transform: translateY(-2px);
+  border-color: #aebdcc;
+  box-shadow: 0 12px 26px rgba(23, 32, 42, 0.08);
 }
 
-.timeline-item.open .timeline-button {
-  background: #f4f7fb;
+.timeline-select-card.active {
+  border-color: #17202a;
+  background: #f2f5f8;
+  box-shadow: 0 14px 30px rgba(23, 32, 42, 0.12);
 }
 
-.timeline-button-text h3 {
-  margin-bottom: 6px;
-}
-
-.timeline-button-text p {
-  margin-bottom: 0;
-  color: #34495e;
-}
-
-.timeline-open-label {
-  flex-shrink: 0;
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: #17202a;
-  color: white;
+.timeline-select-card .timeline-date {
+  color: #1f618d;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 900;
+}
+
+.timeline-select-card strong {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.timeline-select-card span:last-child {
+  color: #5d6d7e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.timeline-chart-area {
+  margin-top: 8px;
 }
 
 .timeline-chart-panel {
-  padding: 18px;
-  border-top: 1px solid #e2e8f0;
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
   background: white;
 }
 
@@ -571,13 +584,13 @@ h3 {
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .timeline-chart-head strong {
   display: block;
-  margin-bottom: 4px;
-  font-size: 17px;
+  margin-bottom: 5px;
+  font-size: 20px;
 }
 
 .timeline-chart-head p {
@@ -585,17 +598,38 @@ h3 {
   color: #5d6d7e;
 }
 
-.timeline-chart-head span {
-  flex-shrink: 0;
-  color: #1f618d;
+.timeline-peak-box {
+  display: grid;
+  gap: 3px;
+  min-width: 130px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f4f7fb;
+  text-align: right;
+}
+
+.timeline-peak-box span {
+  color: #5d6d7e;
+  font-size: 12px;
   font-weight: 800;
+}
+
+.timeline-peak-box strong {
+  margin-bottom: 0;
+  color: #1f618d;
+  font-size: 22px;
+}
+
+.timeline-peak-box small {
+  color: #5d6d7e;
+  font-weight: 700;
 }
 
 .timeline-svg {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 16px;
+  border-radius: 18px;
   background: #f8fafc;
 }
 
@@ -627,6 +661,7 @@ h3 {
   stroke-width: 3;
 }
 
+.timeline-svg-point-label,
 .timeline-svg-x-label,
 .timeline-svg-y-label {
   fill: #5d6d7e;
@@ -639,21 +674,39 @@ h3 {
   color: #5d6d7e;
 }
 
-@media (max-width: 640px) {
-  .countdown-card {
-    width: 100%;
+@media (max-width: 900px) {
+  .main-header-layout {
+    grid-template-columns: 1fr;
   }
 
-  .timeline-button {
-    flex-direction: column;
-    align-items: flex-start;
+  .election-countdown {
+    justify-self: start;
+  }
+
+  .countdown-card {
+    text-align: left;
+  }
+
+  .timeline-list {
+    grid-template-columns: 1fr;
   }
 
   .timeline-chart-head {
     flex-direction: column;
   }
 
-  .timeline-chart-head span {
-    flex-shrink: 1;
+  .timeline-peak-box {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .countdown-card {
+    width: 100%;
+  }
+
+  .countdown-dday {
+    font-size: 48px;
   }
 }
