@@ -7,15 +7,19 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
+ <header class="site-header">
+  <div class="header-inner main-header-layout">
+    <div class="header-copy">
       <p class="eyebrow">Seoul Election Dashboard</p>
       <h1>서울시장 후보 이슈 대시보드</h1>
       <p class="header-description">
         후보별 주요 키워드, 언급량, 쟁점 흐름을 한 화면에서 비교하는 정적 웹 대시보드입니다.
       </p>
     </div>
-  </header>
+
+    <div id="electionCountdown" class="election-countdown"></div>
+  </div>
+</header>
 
   <main class="page">
     <section class="toolbar" aria-label="후보 검색 및 정렬">
